@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "UltraLeap_Proyect.sln"
+    "dotnet.defaultSolution": "ultraleap_proyect.sln"
 }
