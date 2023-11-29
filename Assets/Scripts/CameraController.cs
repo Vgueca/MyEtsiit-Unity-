@@ -4,9 +4,16 @@ using Leap;
 
 public class CameraController : MonoBehaviour
 {
+    private Vector3 posIni = new Vector3(0.0f,0.0f,-2.58f);
+    private int comienzo = 0;
+    private float minAngle = -10.0f;
+    private float maxAngle = 60.0f;
+    private float rotadoX = 0.0f;
+    private float rotadoY = 0.0f;
     private float _minSwipeDistance = 2.0f;
     private Vector3 derecha = new Vector3(1,0,0);
     private Vector3 arriba = new Vector3(0,1,0);
+    private Vector3 atras = new Vector3(0,0,1);
     public LeapProvider _leapProvider;
     public Transform target;
 
@@ -41,35 +48,82 @@ public class CameraController : MonoBehaviour
                 {
                     if(right.PalmVelocity.x < -_minSwipeDistance)
                         angulo *= -1;
+                    rotadoX += angulo;
                     transform.RotateAround(target.position, arriba, angulo);
                 }
 
                 if (right.PalmVelocity.y > _minSwipeDistance || right.PalmVelocity.y < -_minSwipeDistance)
                 {
                     if(right.PalmVelocity.y < -_minSwipeDistance)
+                    {
                         angulo *= -1;
-                    transform.RotateAround(target.position, derecha, angulo);
+                        if(rotadoY > minAngle)
+                        {
+                            rotadoY += angulo;
+                            transform.RotateAround(target.position, derecha, angulo);
+                        }
+                    }
+                    else
+                    {
+                        if(rotadoY < maxAngle)
+                        {
+                            rotadoY += angulo;
+                            transform.RotateAround(target.position, derecha, angulo);
+                        }
+                    }
                 }		
 
             }
 
             if(left != null)
             {	
-                
-                if (left.PalmVelocity.x < -_minSwipeDistance || left.PalmVelocity.x > _minSwipeDistance)
+                if (left.PalmVelocity.x > _minSwipeDistance || left.PalmVelocity.x < -_minSwipeDistance)
                 {
                     if(left.PalmVelocity.x < -_minSwipeDistance)
                         angulo *= -1;
+                    rotadoX += angulo;
                     transform.RotateAround(target.position, arriba, angulo);
                 }
-            
-                if (left.PalmVelocity.y < -_minSwipeDistance || left.PalmVelocity.y > _minSwipeDistance)
+
+                if (left.PalmVelocity.y > _minSwipeDistance || left.PalmVelocity.y < -_minSwipeDistance)
                 {
                     if(left.PalmVelocity.y < -_minSwipeDistance)
+                    {
                         angulo *= -1;
-                    transform.RotateAround(target.position, derecha, angulo);
-                }
+                        if(rotadoY > minAngle)
+                        {
+                            rotadoY += angulo;
+                            transform.RotateAround(target.position, derecha, angulo);
+                        }
+                    }
+                    else
+                    {
+                        if(rotadoY < maxAngle)
+                        {
+                            rotadoY += angulo;
+                            transform.RotateAround(target.position, derecha, angulo);
+                        }
+                    }
+                }		
+
             }
         }
+
+        if(comienzo > 0)
+        {
+            comienzo--;
+            transform.position = posIni;
+            transform.Rotate(arriba, 360.0f + transform.eulerAngles.x);
+            transform.Rotate(derecha, 360.0f + transform.eulerAngles.y);
+            transform.Rotate(atras, 360.0f + transform.eulerAngles.z);
+            transform.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
+            rotadoX = 0;
+            rotadoY = 0;
+        }
 	}
+
+    public void Comenzar()
+    {
+        comienzo +=1;
+    }
 }
