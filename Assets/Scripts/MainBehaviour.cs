@@ -17,13 +17,19 @@ public class MainBehaviour : MonoBehaviour
     }
     //able gameobject
     public void able(){
-        Debug.Log("Iniciando");
         this.gameObject.SetActive(true);
     }
 
     //disable gameobject
     public void disable(){
-        Debug.Log("Iniciando");
         this.gameObject.SetActive(false);
+    }
+
+    public void ableTemporal(){
+       
+        this.gameObject.SetActive(true);
+        // Desactiva el objeto después de 8 segundos
+        Invoke("disable", 8.0f);
+
     }
 }

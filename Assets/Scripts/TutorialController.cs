@@ -47,11 +47,15 @@ public class TutorialController : MonoBehaviour
         switch (challengeIndex)
         {
             case 0:
-                instructionText.text = "Mueve el cursor hacia las estrellas.";
+                instructionText.text = "Mueve el cursor hacia las estrellas!!";
                 break;
             case 1:
-                instructionText.text = "Haz clic en los globos.";
+                instructionText.text = "Haz clic en los globos!!";
                 break;
+            case 2:
+                instructionText.text = "Haz clic en los pen-drives!!";
+                break;
+
             // Añade más casos según sea necesario
         }
     }
