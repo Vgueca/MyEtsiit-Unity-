@@ -5,6 +5,7 @@ using Leap;
 public class CameraController : MonoBehaviour
 {
     private Vector3 posIni = new Vector3(0.0f,0.0f,-2.58f);
+    private Vector3 iniRotation = new Vector3(0.0f,0.0f,0.0f);
     private int comienzo = 0;
     private float minAngle = -10.0f;
     private float maxAngle = 60.0f;
@@ -116,7 +117,7 @@ public class CameraController : MonoBehaviour
             transform.Rotate(arriba, 360.0f + transform.eulerAngles.x);
             transform.Rotate(derecha, 360.0f + transform.eulerAngles.y);
             transform.Rotate(atras, 360.0f + transform.eulerAngles.z);
-            transform.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
+            transform.eulerAngles = iniRotation;
             rotadoX = 0;
             rotadoY = 0;
         }
