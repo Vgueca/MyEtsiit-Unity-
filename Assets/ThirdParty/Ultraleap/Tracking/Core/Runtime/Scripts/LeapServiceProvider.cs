@@ -601,7 +601,7 @@ namespace Leap.Unity
                 return;
             }
 #endif
-
+            
             if (_frameOptimization == FrameOptimizationMode.ReusePhysicsForUpdate)
             {
                 DispatchUpdateFrameEvent(_transformedFixedFrame);

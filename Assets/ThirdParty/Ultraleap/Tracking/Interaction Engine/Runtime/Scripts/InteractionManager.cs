@@ -342,6 +342,7 @@ namespace Leap.Unity.Interaction
 
         void FixedUpdate()
         {
+            
             OnPrePhysicalUpdate();
 
             // Physics should only be synced once at the beginning of the physics simulation.
@@ -361,7 +362,7 @@ namespace Leap.Unity.Interaction
 
                 // Update each interaction controller (Leap hands or supported VR controllers).
                 fixedUpdateInteractionControllers();
-
+               
                 // Perform each interaction object's FixedUpdateObject.
                 foreach (var interactionObj in _interactionObjects)
                 {
