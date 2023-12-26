@@ -21,7 +21,6 @@ public class CustomCursor : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // Cambiar a la textura de clic
-            Debug.Log("Click");
             Cursor.SetCursor(clickCursorTexture, Vector2.zero, CursorMode.ForceSoftware);
         }
         else if (Input.GetMouseButtonUp(0))

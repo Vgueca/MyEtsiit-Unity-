@@ -8,24 +8,43 @@ public class SwipeController : MonoBehaviour
 {
     public GameObject[] days; // Array que contiene los objetos de los días
     public Button[] buttons; // Array que contiene los botones
-    private int currentDay = 0; // Índice del día actual
+    private int currentDay; // Índice del día actual
     private Vector3 previousPalmPosition; // La posición de la palma de la mano derecha en el frame anterior
     public LeapServiceProvider provider; // El LeapServiceProvider
 
-
+    public GameObject[] labels; // Array que contiene los objetos de los labels
     void Start()
-    {
+    {   
+        // Desactiva todos los días y las etiquetas
+        foreach (GameObject day in days)
+        {
+            day.SetActive(false);
+        }
+        foreach (GameObject label in labels)
+        {
+            label.SetActive(false);
+        }
+        // Obtiene el día de la semana actual 
+        currentDay = (int)System.DateTime.Now.DayOfWeek;
+        currentDay = currentDay == 0 ? 6 : currentDay - 1; 
+
+        // Activa el día actual
+        days[currentDay].SetActive(true);
+        //labels[currentDay].SetActive(true);
+
         for (int i = 0; i < buttons.Length; i++)
         {
             int day = i;
-            buttons[i].onClick.AddListener(() => 
+            Button button = buttons[i];
+            button.onClick.AddListener(() => 
             {
                 currentDay = day;
-                StartCoroutine(AnimateButton(buttons[currentDay]));
+                StartCoroutine(AnimateButton(button));
             });
         }
     }
-    
+
+
     void Update()
     {
         Frame frame = provider.CurrentFrame;
@@ -54,12 +73,25 @@ public class SwipeController : MonoBehaviour
                 previousPalmPosition = hand.PalmPosition;
             }
         }
+
+        // Restaura el tamaño y el color de todos los botones
+        foreach (Button button in buttons)
+        {
+            button.transform.localScale = new Vector3(1, 1, 1);
+            button.image.color = Color.white;
+        }
+
+        // Marca el botón actual
+        buttons[currentDay].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        buttons[currentDay].image.color = Color.green;
     }
+
 
     void ChangeDay(int direction)
     {
         // Desactiva el día actual
         days[currentDay].SetActive(false);
+        labels[currentDay].SetActive(false);
 
         // Calcula el índice del nuevo día
         currentDay = (currentDay + direction) % days.Length;
@@ -67,22 +99,27 @@ public class SwipeController : MonoBehaviour
 
         // Activa el nuevo día
         days[currentDay].SetActive(true);
+        labels[currentDay].SetActive(true);
     }
 
     IEnumerator AnimateButton(Button button)
     {
+        // Si el botón está marcado, omite la animación
+        if (button.transform.localScale.x > 1)
+        {
+            yield break;
+        }
+
         // Guarda el tamaño y el color originales del botón
         Vector3 originalScale = button.transform.localScale;
         Color originalColor = button.image.color;
 
-        // Aumenta el tamaño del botón y cambia su color a verde
         button.transform.localScale = originalScale * 1.2f;
         button.image.color = Color.green;
 
-        // Espera 0.1 segundos
         yield return new WaitForSeconds(0.1f);
 
-        // Reduce el tamaño del botón y cambia su color de vuelta al color original durante 0.1 segundos
+        // Restaura el tamaño y el color originales del botón
         float elapsedTime = 0f;
         while (elapsedTime < 0.1f)
         {
@@ -92,8 +129,8 @@ public class SwipeController : MonoBehaviour
             yield return null;
         }
 
-        // Asegúrate de que el tamaño y el color del botón vuelven a ser los originales
         button.transform.localScale = originalScale;
         button.image.color = originalColor;
     }
+
 }
