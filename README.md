@@ -14,9 +14,9 @@ El proyecto ha sido desarrollado utilizando las siguientes tecnologías:
 
 - **UltraLeap**: UltraLeap es una tecnología de seguimiento de manos que permite a los usuarios interactuar con sistemas digitales de forma natural, sin necesidad de hardware adicional como guantes o controladores. En este proyecto, UltraLeap se utiliza para detectar los gestos de la mano del usuario y traducirlos en acciones dentro de la aplicación.
 
-## Desarrollo y Tecnologías Utilizadas
+## Desarrollo
 
-El proyecto de HandTracking con UltraLeap ha sido desarrollado utilizando las siguientes tecnologías:
+El proyecto de HandTracking con UltraLeap ha sido desarrollado utilizando el lenguaje de programación **C#**:
 
 - **C#**: C# es un lenguaje de programación moderno, orientado a objetos y de tipo seguro. En este proyecto, se utiliza C# para escribir scripts en Unity que controlan la lógica detrás de la aplicación y la interacción del usuario.
 
